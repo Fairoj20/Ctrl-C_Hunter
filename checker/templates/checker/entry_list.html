@@ -1,0 +1,32 @@
+{% extends "checker/base.html" %}
+
+{% block content %}
+<h2>All Entries</h2>
+
+<a href="{% url 'checker:entry_add' %}" class="btn">Add New Entry</a>
+
+{% if entries %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.id }}</td>
+            <td>{{ entry.title|default:"(no title)" }}</td>
+            <td>{{ entry.created_at|date:"Y-m-d H:i" }}</td>
+            <td>
+                <a href="{% url 'checker:entry_detail' entry.pk %}">View</a> |
+                <a href="{% url 'checker:entry_edit' entry.pk %}">Edit</a> |
+                <a href="{% url 'checker:entry_delete' entry.pk %}" style="color: #e74c3c;">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No entries yet. <a href="{% url 'checker:entry_add' %}">Create your first entry</a></p>
+{% endif %}
+{% endblock %}
