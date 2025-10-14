@@ -1,0 +1,18 @@
+{% extends "checker/base.html" %}
+
+{% block content %}
+<h2>Delete Entry</h2>
+
+<div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin: 20px 0; border-radius: 4px;">
+    <p style="color: #856404; font-size: 16px;">
+        Are you sure you want to delete the entry: <strong>"{{ object.title }}"</strong>?
+    </p>
+    <p style="color: #856404; margin-top: 10px;">This action cannot be undone.</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background: #e74c3c;">Yes, Delete</button>
+    <a href="{% url 'checker:entry_list' %}" class="btn" style="margin-left: 10px;">Cancel</a>
+</form>
+{% endblock %}
