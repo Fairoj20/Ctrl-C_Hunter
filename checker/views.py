@@ -1,4 +1,4 @@
-Try AI directly in your favorite apps … Use Gemini to generate drafts and refine content, plus get Gemini Pro with access to Google's next-gen AI for BDT 2,500 BDT 0 for 1 month
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.urls import reverse_lazy, reverse
