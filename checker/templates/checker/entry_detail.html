@@ -1,0 +1,31 @@
+{% extends "checker/base.html" %}
+
+{% block content %}
+<h2>Entry Details</h2>
+
+<div style="background: #f9f9f9; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+    <p><strong>ID:</strong> {{ entry.id }}</p>
+    <p><strong>Title:</strong> {{ entry.title|default:"(no title)" }}</p>
+    <p><strong>Uploaded File:</strong>
+        {% if entry.uploaded_file %}
+            <a href="{{ entry.uploaded_file.url }}">{{ entry.uploaded_file.name }}</a>
+        {% else %}
+            None
+        {% endif %}
+    </p>
+    <p><strong>Created At:</strong> {{ entry.created_at|date:"Y-m-d H:i" }}</p>
+    <p><strong>Last Updated:</strong> {{ entry.updated_at|date:"Y-m-d H:i" }}</p>
+</div>
+
+<h3 style="margin-top: 20px; font-size: 16px;">Pasted Text:</h3>
+<pre>{{ entry.pasted_text|default:"No text provided" }}</pre>
+
+<h3 style="margin-top: 20px; font-size: 16px;">Extracted Text:</h3>
+<pre>{{ entry.extracted_text|default:"No extracted text" }}</pre>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'checker:entry_edit' entry.pk %}" class="btn">Edit</a>
+    <a href="{% url 'checker:entry_delete' entry.pk %}" class="btn" style="background: #e74c3c; margin-left: 10px;">Delete</a>
+    <a href="{% url 'checker:entry_list' %}" style="margin-left: 10px;">Back to List</a>
+</div>
+{% endblock %}
