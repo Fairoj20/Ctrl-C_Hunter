@@ -1,0 +1,202 @@
+Try AI directly in your favorite apps … Use Gemini to generate drafts and refine content, plus get Gemini Pro with access to Google's next-gen AI for BDT 2,500 BDT 0 for 1 month
+{% extends "checker/base.html" %}
+
+{% block content %}
+<h2>Compare Texts or Files</h2>
+
+<form method="POST" enctype="multipart/form-data" action="{% url 'checker:compare' %}" id="compareForm">
+    {% csrf_token %}
+
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+        <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">First Document (A)</h3>
+
+        <div class="form-group">
+            <label for="{{ form.entry_a.id_for_label }}">Select Existing Entry:</label>
+            {{ form.entry_a }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.pasted_a.id_for_label }}">OR Paste Text:</label>
+            {{ form.pasted_a }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.file_a.id_for_label }}">OR Upload File:</label>
+            {{ form.file_a }}
+        </div>
+
+        <button type="button" onclick="clearA()" style="background: #e74c3c; font-size: 12px; padding: 6px 12px;">Clear A</button>
+    </div>
+
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+        <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">Second Document (B)</h3>
+
+        <div class="form-group">
+            <label for="{{ form.entry_b.id_for_label }}">Select Existing Entry:</label>
+            {{ form.entry_b }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.pasted_b.id_for_label }}">OR Paste Text:</label>
+            {{ form.pasted_b }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.file_b.id_for_label }}">OR Upload File:</label>
+            {{ form.file_b }}
+        </div>
+
+        <button type="button" onclick="clearB()" style="background: #e74c3c; font-size: 12px; padding: 6px 12px;">Clear B</button>
+    </div>
+
+    {% if form.errors %}
+        <div style="background: #ffebee; border-left: 4px solid #f44336; padding: 15px; margin-bottom: 20px;">
+            <strong>Form Errors:</strong>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+
+    <button type="submit">Check Similarity</button>
+</form>
+
+{% if result %}
+    <div style="background: #f9f9f9; padding: 25px; border-radius: 4px; margin-top: 30px; border-left: 4px solid #4a90e2;">
+        <h3 style="color: #333; margin-bottom: 15px; font-size: 18px;">Similarity Result</h3>
+
+        <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+            <div>
+                <p style="font-size: 14px; color: #666; margin-bottom: 5px;">Similarity Score</p>
+                <p style="font-size: 32px; font-weight: bold; color: #4a90e2;">{{ result.score }}%</p>
+            </div>
+
+            <div>
+                <p style="font-size: 14px; color: #666; margin-bottom: 5px;">Status</p>
+                <p style="font-size: 18px; font-weight: bold;
+                    {% if result.score >= 80 %}color: #e74c3c;
+                    {% elif result.score >= 50 %}color: #f39c12;
+                    {% else %}color: #27ae60;{% endif %}">
+                    {{ result.status }}
+                </p>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 4px;">
+            {% if result.score >= 80 %}
+                <p style="color: #e74c3c; font-weight: bold;">⚠️ High similarity detected! Possible plagiarism.</p>
+            {% elif result.score >= 50 %}
+                <p style="color: #f39c12; font-weight: bold;">⚠️ Moderate similarity detected.</p>
+            {% else %}
+                <p style="color: #27ae60; font-weight: bold;">✓ Low similarity - texts appear unique.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'checker:entry_list' %}">Back to Entries</a>
+</div>
+
+<script>
+// Get form elements for A
+const entryA = document.getElementById('id_entry_a');
+const pastedA = document.getElementById('id_pasted_a');
+const fileA = document.getElementById('id_file_a');
+
+// Get form elements for B
+const entryB = document.getElementById('id_entry_b');
+const pastedB = document.getElementById('id_pasted_b');
+const fileB = document.getElementById('id_file_b');
+
+// Function to manage Document A inputs
+function manageInputsA() {
+    const hasEntry = entryA.value !== '';
+    const hasText = pastedA.value.trim() !== '';
+    const hasFile = fileA.files.length > 0;
+
+    if (hasEntry) {
+        pastedA.disabled = true;
+        fileA.disabled = true;
+        pastedA.style.background = '#e0e0e0';
+        fileA.style.background = '#e0e0e0';
+    } else if (hasText) {
+        entryA.disabled = true;
+        fileA.disabled = true;
+        entryA.style.background = '#e0e0e0';
+        fileA.style.background = '#e0e0e0';
+    } else if (hasFile) {
+        entryA.disabled = true;
+        pastedA.disabled = true;
+        entryA.style.background = '#e0e0e0';
+        pastedA.style.background = '#e0e0e0';
+    } else {
+        entryA.disabled = false;
+        pastedA.disabled = false;
+        fileA.disabled = false;
+        entryA.style.background = '';
+        pastedA.style.background = '';
+        fileA.style.background = '';
+    }
+}
+
+// Function to manage Document B inputs
+function manageInputsB() {
+    const hasEntry = entryB.value !== '';
+    const hasText = pastedB.value.trim() !== '';
+    const hasFile = fileB.files.length > 0;
+
+    if (hasEntry) {
+        pastedB.disabled = true;
+        fileB.disabled = true;
+        pastedB.style.background = '#e0e0e0';
+        fileB.style.background = '#e0e0e0';
+    } else if (hasText) {
+        entryB.disabled = true;
+        fileB.disabled = true;
+        entryB.style.background = '#e0e0e0';
+        fileB.style.background = '#e0e0e0';
+    } else if (hasFile) {
+        entryB.disabled = true;
+        pastedB.disabled = true;
+        entryB.style.background = '#e0e0e0';
+        pastedB.style.background = '#e0e0e0';
+    } else {
+        entryB.disabled = false;
+        pastedB.disabled = false;
+        fileB.disabled = false;
+        entryB.style.background = '';
+        pastedB.style.background = '';
+        fileB.style.background = '';
+    }
+}
+
+// Clear function for A
+function clearA() {
+    entryA.value = '';
+    pastedA.value = '';
+    fileA.value = '';
+    manageInputsA();
+}
+
+// Clear function for B
+function clearB() {
+    entryB.value = '';
+    pastedB.value = '';
+    fileB.value = '';
+    manageInputsB();
+}
+
+// Add event listeners for Document A
+entryA.addEventListener('change', manageInputsA);
+pastedA.addEventListener('input', manageInputsA);
+fileA.addEventListener('change', manageInputsA);
+
+// Add event listeners for Document B
+entryB.addEventListener('change', manageInputsB);
+pastedB.addEventListener('input', manageInputsB);
+fileB.addEventListener('change', manageInputsB);
+
+// Initialize on page load
+manageInputsA();
+manageInputsB();
+</script>
+{% endblock %}
