@@ -1,0 +1,92 @@
+{% extends "checker/base.html" %}
+
+{% block content %}
+<h2>Comparison Details</h2>
+
+<div style="background: #f9f9f9; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
+    <p><strong>Compared On:</strong> {{ comparison.compared_at|date:"F d, Y at H:i" }}</p>
+    <p><strong>Similarity Score:</strong> 
+        <span style="font-size: 24px; font-weight: bold; 
+            {% if comparison.similarity_score >= 80 %}color: #e74c3c;
+            {% elif comparison.similarity_score >= 50 %}color: #f39c12;
+            {% else %}color: #27ae60;{% endif %}">
+            {{ comparison.similarity_score }}%
+        </span>
+    </p>
+    <p><strong>Status:</strong> 
+        <span style="padding: 6px 12px; border-radius: 4px; font-weight: bold;
+            {% if comparison.similarity_score >= 80 %}background: #ffebee; color: #e74c3c;
+            {% elif comparison.similarity_score >= 50 %}background: #fff3e0; color: #f39c12;
+            {% else %}background: #e8f5e9; color: #27ae60;{% endif %}">
+            {{ comparison.similarity_status }}
+        </span>
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 4px;">
+        <h3 style="font-size: 16px; color: #333; margin-bottom: 15px; border-bottom: 2px solid #4a90e2; padding-bottom: 5px;">
+            Document A
+        </h3>
+        <p><strong>Source Type:</strong> 
+            {% if comparison.source_a_type == 'entry' %}
+                📋 Saved Entry
+            {% elif comparison.source_a_type == 'file' %}
+                📄 Uploaded File
+            {% else %}
+                ✏️ Pasted Text
+            {% endif %}
+        </p>
+        
+        {% if comparison.source_a_entry %}
+            <p><strong>Entry:</strong> 
+                <a href="{% url 'checker:entry_detail' comparison.source_a_entry.pk %}">
+                    {{ comparison.source_a_entry.title|default:"Untitled" }}
+                </a>
+            </p>
+        {% endif %}
+        
+        {% if comparison.source_a_filename %}
+            <p><strong>Filename:</strong> {{ comparison.source_a_filename }}</p>
+        {% endif %}
+        
+        <h4 style="margin-top: 15px; font-size: 14px; color: #555;">Text Content:</h4>
+        <pre style="max-height: 300px; overflow-y: auto;">{{ comparison.source_a_text }}</pre>
+    </div>
+    
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 4px;">
+        <h3 style="font-size: 16px; color: #333; margin-bottom: 15px; border-bottom: 2px solid #4a90e2; padding-bottom: 5px;">
+            Document B
+        </h3>
+        <p><strong>Source Type:</strong> 
+            {% if comparison.source_b_type == 'entry' %}
+                📋 Saved Entry
+            {% elif comparison.source_b_type == 'file' %}
+                📄 Uploaded File
+            {% else %}
+                ✏️ Pasted Text
+            {% endif %}
+        </p>
+        
+        {% if comparison.source_b_entry %}
+            <p><strong>Entry:</strong> 
+                <a href="{% url 'checker:entry_detail' comparison.source_b_entry.pk %}">
+                    {{ comparison.source_b_entry.title|default:"Untitled" }}
+                </a>
+            </p>
+        {% endif %}
+        
+        {% if comparison.source_b_filename %}
+            <p><strong>Filename:</strong> {{ comparison.source_b_filename }}</p>
+        {% endif %}
+        
+        <h4 style="margin-top: 15px; font-size: 14px; color: #555;">Text Content:</h4>
+        <pre style="max-height: 300px; overflow-y: auto;">{{ comparison.source_b_text }}</pre>
+    </div>
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'checker:history_list' %}" class="btn">Back to History</a>
+    <a href="{% url 'checker:compare' %}" style="margin-left: 10px;">New Comparison</a>
+</div>
+{% endblock %}
