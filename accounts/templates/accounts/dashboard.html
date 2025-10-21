@@ -1,0 +1,58 @@
+{% extends 'checker/base.html' %}
+
+{% block content %}
+<style>
+  .dashboard-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9fbff;
+    border: 1px solid #dce6f2;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .dashboard-container h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-container p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-actions {
+    margin-top: 25px;
+  }
+
+  .dashboard-actions a {
+    display: inline-block;
+    margin-right: 15px;
+    padding: 10px 18px;
+    background-color: #4a90e2;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .dashboard-actions a:hover {
+    background-color: #357abd;
+  }
+</style>
+
+<div class="dashboard-container">
+  <h2>Welcome back, {{ user.first_name }}!</h2>
+  <p><strong>Account Role:</strong> {{ user.profile.get_role_display }}</p>
+  <p><strong>Institution:</strong> {{ user.profile.institution|default:"Not provided" }}</p>
+  <p>This is your personal dashboard. From here, you can manage your profile, track your activity, and access all the tools available to your role.</p>
+
+  <div class="dashboard-actions">
+    <a href="{% url 'accounts:profile' %}">⚙️ Edit Profile</a>
+    <a href="{% url 'accounts:logout' %}">🚪 Logout</a>
+  </div>
+</div>
+{% endblock %}

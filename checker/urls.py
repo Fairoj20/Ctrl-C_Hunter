@@ -1,11 +1,11 @@
-
 from django.urls import path
 from . import views
 
 app_name = 'checker'
 
 urlpatterns = [
-    path('', views.EntryListView.as_view(), name='entry_list'),
+    path('', views.home_view, name='home'),  # Homepage
+    path('entries/', views.EntryListView.as_view(), name='entry_list'),
     path('entry/<int:pk>/', views.EntryDetailView.as_view(), name='entry_detail'),
     path('entry/add/', views.EntryCreateView.as_view(), name='entry_add'),
     path('entry/<int:pk>/edit/', views.EntryUpdateView.as_view(), name='entry_edit'),

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Plagiarism Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e6f2ff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #4a90e2;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .intro {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .password-hints {
+      background-color: #fff9c4;
+      border: 1px solid #f0e68c;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .section-label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #4a90e2;
+      margin: 20px 0 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .btn {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #357abd;
+    }
+
+    .link {
+      font-size: 14px;
+      color: #4a90e2;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Welcome!</h2>
+    <h3>Create Your Account</h3>
+    <div class="intro">Create your account to get full access and enjoy premium features.</div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+      {{ form.username }}
+      {% if form.username.errors %}
+        <div class="error">{{ form.username.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+      {{ form.email }}
+      {% if form.email.errors %}
+        <div class="error">{{ form.email.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+      {{ form.first_name }}
+      {% if form.first_name.errors %}
+        <div class="error">{{ form.first_name.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+      {{ form.last_name }}
+      {% if form.last_name.errors %}
+        <div class="error">{{ form.last_name.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+      {{ form.password1 }}
+      {% if form.password1.errors %}
+        <div class="error">{{ form.password1.errors }}</div>
+      {% endif %}
+
+      <div class="password-hints">
+        <ul>
+          <li>Your password can't be too similar to your other personal information.</li>
+          <li>Your password must contain at least 8 characters.</li>
+          <li>Your password can't be a commonly used password.</li>
+          <li>Your password can't be entirely numeric.</li>
+        </ul>
+      </div>
+
+      <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+      {{ form.password2 }}
+      {% if form.password2.errors %}
+        <div class="error">{{ form.password2.errors }}</div>
+      {% endif %}
+
+      <div class="section-label">Profile Information</div>
+
+      <label for="{{ form.role.id_for_label }}">{{ form.role.label }}</label>
+      {{ form.role }}
+      {% if form.role.errors %}
+        <div class="error">{{ form.role.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.institution.id_for_label }}">{{ form.institution.label }}</label>
+      {{ form.institution }}
+      {% if form.institution.errors %}
+        <div class="error">{{ form.institution.errors }}</div>
+      {% endif %}
+
+      <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+      {{ form.phone }}
+      {% if form.phone.errors %}
+        <div class="error">{{ form.phone.errors }}</div>
+      {% endif %}
+
+      <button type="submit" class="btn">Register</button>
+    </form>
+
+    <a href="{% url 'accounts:login' %}" class="link">Already have an account? Login</a>
+  </div>
+</body>
+</html>

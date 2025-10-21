@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 class TextEntry(models.Model):
     TITLE_MAX = 255
@@ -10,6 +10,7 @@ class TextEntry(models.Model):
         ('DIFFERENT', 'Different'),
     ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='entries', default=1)
     title = models.CharField(max_length=TITLE_MAX, blank=True)
     uploaded_file = models.FileField(upload_to='uploads/', blank=True, null=True)
     pasted_text = models.TextField(blank=True)
@@ -17,9 +18,13 @@ class TextEntry(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-    last_compared_with = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL,
-                                           related_name='compared_entries')
+    last_compared_with = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='compared_entries'
+    )
     last_similarity_score = models.FloatField(null=True, blank=True)
     last_similarity_status = models.CharField(max_length=20, choices=STATUS_CHOICES, blank=True)
 
@@ -35,8 +40,13 @@ class ComparisonHistory(models.Model):
         ('pasted', 'Pasted Text'),
         ('file', 'Uploaded File')
     ])
-    source_a_entry = models.ForeignKey(TextEntry, null=True, blank=True, on_delete=models.SET_NULL,
-                                       related_name='comparisons_as_a')
+    source_a_entry = models.ForeignKey(
+        TextEntry,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='comparisons_as_a'
+    )
     source_a_text = models.TextField()
     source_a_filename = models.CharField(max_length=255, blank=True)
 
@@ -45,14 +55,18 @@ class ComparisonHistory(models.Model):
         ('pasted', 'Pasted Text'),
         ('file', 'Uploaded File')
     ])
-    source_b_entry = models.ForeignKey(TextEntry, null=True, blank=True, on_delete=models.SET_NULL,
-                                       related_name='comparisons_as_b')
+    source_b_entry = models.ForeignKey(
+        TextEntry,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='comparisons_as_b'
+    )
     source_b_text = models.TextField()
     source_b_filename = models.CharField(max_length=255, blank=True)
 
     similarity_score = models.FloatField()
     similarity_status = models.CharField(max_length=50)
-
     compared_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

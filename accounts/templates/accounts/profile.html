@@ -1,0 +1,14 @@
+{% extends 'checker/base.html' %}
+{% block content %}
+<h2>Update Profile</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h4>Account Info</h4>
+    {{ u_form.as_p }}
+    <p>{{ p_form.role.label_tag }} {{ p_form.role }}</p>
+<p>{{ p_form.bio.label_tag }} {{ p_form.bio }}</p>
+<p>{{ p_form.phone.label_tag }} {{ p_form.phone }}</p>
+<p>{{ p_form.institution.label_tag }} {{ p_form.institution }}</p>
+    <button type="submit">Update</button>
+</form>
+{% endblock %}

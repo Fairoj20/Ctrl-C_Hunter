@@ -7,6 +7,12 @@ from .models import TextEntry, ComparisonHistory
 from .forms import TextEntryForm, CompareForm
 from .utils import extract_text_from_file, compute_similarity, normalize_text
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def home_view(request):
+    return render(request, 'checker/home.html')
+
 
 class EntryListView(generic.ListView):
     model = TextEntry

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Plagiarism Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e6f2ff;
+      display: flex;
+      height: 100vh;
+    }
+
+    .left-panel {
+      flex: 2;
+      background-color: #4a90e2;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .left-panel h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .left-panel p {
+      font-size: 16px;
+      color: #f0f0f0;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .right-panel {
+      flex: 1;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 60px;
+    }
+
+    .right-panel h2 {
+      font-size: 24px;
+      color: #4a90e2;
+      margin-bottom: 10px;
+    }
+
+    .right-panel h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .btn {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .btn:hover {
+      background-color: #357abd;
+    }
+
+    .link {
+      font-size: 14px;
+      color: #4a90e2;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="left-panel">
+    <h1>Plagiarism Checker</h1>
+    <p>Login your account to get full user experience</p>
+  </div>
+
+  <div class="right-panel">
+    <h2>Hello!</h2>
+    <h3>Welcome to Plagiarism Checker</h3>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <a href="{% url 'accounts:register' %}" class="link">Create Account</a>
+  </div>
+</body>
+</html>
