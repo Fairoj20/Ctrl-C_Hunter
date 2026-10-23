@@ -55,7 +55,7 @@ Ctrl-C_Hunter/
 ├── manage.py
 ├── requirements.txt
 └── db.sqlite3
-
+---
 
 ## 🚀 Installation & Local Setup
 Prerequisites
@@ -90,7 +90,7 @@ pip install -r requirements.txt
 python manage.py runserver
 
 Open your browser and visit: http://127.0.0.1:8000/
-
+---
 ## 👥 Contributors (Team CTRL + C Hunter)
 Fairoj Salim :
 
@@ -105,6 +105,6 @@ Anjuma Alam :
 Suzana Sehreen :
 
 5 Commits | Functional testing, template structuring, and documentation support.
-
+---
 ## 🎓 Academic Information
 Developed as part of Course CSE 302: Object-Oriented Programming II and Web Programming Lab, Department of Computer Science & Engineering, University of Asia Pacific (UAP).
