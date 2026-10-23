@@ -94,17 +94,18 @@ Visit `http://127.0.0.1:8000` in your browser!
 ---
 
 ## 👥 Contributors (Team CTRL + C Hunter)
-Fairoj Salim :
+
+##Fairoj Salim :
 
 Top Contributor: 9 Commits | 663 Lines Added | 31 Lines Deleted
 
 Lead contributions across user interface, profile management, and document comparison workflows.
 
-Anjuma Alam (23101164) :
+##Anjuma Alam  :
 
 7 Commits | Core repository setup, architecture implementation, and ML similarity pipelines.
 
-Suzana Sehreen (23101139) :
+##Suzana Sehreen  :
 
 5 Commits | Functional testing, template structuring, and documentation support.
 
