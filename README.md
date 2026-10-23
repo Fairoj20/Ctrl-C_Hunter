@@ -57,7 +57,7 @@ Ctrl-C_Hunter/
 └── db.sqlite3
 
 
-🚀 Installation & Local Setup
+## 🚀 Installation & Local Setup
 Prerequisites
 Python 3.10+
 
@@ -91,7 +91,7 @@ python manage.py runserver
 
 Open your browser and visit: http://127.0.0.1:8000/
 
-👥 Contributors (Team CTRL + C Hunter)
+## 👥 Contributors (Team CTRL + C Hunter)
 Fairoj Salim :
 
 Top Contributor: 9 Commits | 663 Lines Added | 31 Lines Deleted
@@ -106,5 +106,5 @@ Suzana Sehreen :
 
 5 Commits | Functional testing, template structuring, and documentation support.
 
-🎓 Academic Information
+## 🎓 Academic Information
 Developed as part of Course CSE 302: Object-Oriented Programming II and Web Programming Lab, Department of Computer Science & Engineering, University of Asia Pacific (UAP).
